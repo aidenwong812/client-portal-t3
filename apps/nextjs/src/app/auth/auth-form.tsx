@@ -8,7 +8,8 @@ import { Button } from "@acme/ui/button";
 import { Input } from "@acme/ui/input";
 import { Label } from "@acme/ui/label";
 
-import { signInWithDiscord, signInWithPassword, signUp } from "./actions";
+import { signInWithDiscord, signInWithGoogle, signInWithPassword, signUp } from "./actions";
+import Image from "next/image";
 
 type AuthFormProps = {
   type: "signup" | "signin";
@@ -60,7 +61,7 @@ export const AuthForm = ({ className, type, ...props }: AuthFormProps) => {
 
                 const email = formData.get("email") as string;
                 const password = formData.get("password") as string;
-                const res = await signInWithPassword(email, password);
+                await signInWithPassword(email, password);
 
                 router.push("/");
               }}
@@ -76,7 +77,7 @@ export const AuthForm = ({ className, type, ...props }: AuthFormProps) => {
 
                 const email = formData.get("email") as string;
                 const password = formData.get("password") as string;
-                const res = await signUp(email, password);
+                await signUp(email, password);
 
                 router.push("/");
               }}
@@ -96,6 +97,16 @@ export const AuthForm = ({ className, type, ...props }: AuthFormProps) => {
           </span>
         </div>
       </div>
+      <Button
+        variant="outline"
+        type="button"
+        className="flex gap-3"
+        disabled={isLoading}
+        onClick={() => signInWithGoogle()}
+      >
+        <Image src="/google.svg" alt="Google icon" width={15} height={15} />
+        Google
+      </Button>
       <Button
         variant="outline"
         type="button"
