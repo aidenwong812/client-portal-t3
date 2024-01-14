@@ -7,11 +7,13 @@ export const GET = async (request: NextRequest) => {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+
   if (code) {
     const supabase = createRouteHandlerClient({ cookies });
     await supabase.auth.exchangeCodeForSession(code);
   }
 
   // URL to redirect to after sign in process completes
-  return NextResponse.redirect(url.origin);
+  return NextResponse.redirect(`${baseUrl}/clients`);
 };

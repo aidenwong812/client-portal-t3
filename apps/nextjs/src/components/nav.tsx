@@ -46,7 +46,7 @@ export const UserNav = async () => {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">Kaiyu</p>
+            <p className="text-sm font-medium leading-none">Aiden</p>
             <p className="text-xs leading-none text-muted-foreground">
               {data.user?.email}
             </p>
@@ -79,4 +79,35 @@ export const UserNav = async () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+};
+
+export const Navbar = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getUser();
+
+  if (!data.user) {
+    return (
+      <div className="flex justify-between">
+        <Link href="/">Cient Portal</Link>
+        <div className="flex items-center space-x-4 text-sm">
+          <Link
+            href="/auth/signup"
+            className="inline-flex transition-colors bg-secondary text-secondary-foreground font-medium rounded-md shadow hover:bg-secondary/90 h-9 px-4 py-2"
+          >
+            Sign Up
+          </Link>
+          <Link
+            href="/auth/login"
+            className="inline-flex transition-colors bg-primary text-primary-foreground font-medium rounded-md shadow hover:bg-primary/90 h-9 px-4 py-2"
+          >
+            Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <></>
+  )
 };
