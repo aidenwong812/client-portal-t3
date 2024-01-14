@@ -285,11 +285,11 @@ importers:
   packages/db:
     dependencies:
       '@prisma/client':
-        specifier: ^5.7.1
-        version: 5.7.1(prisma@5.7.1)
+        specifier: ^5.8.0
+        version: 5.8.0(prisma@5.7.1)
       '@prisma/extension-accelerate':
         specifier: ^0.6.2
-        version: 0.6.2(@prisma/client@5.7.1)
+        version: 0.6.2(@prisma/client@5.8.0)
       '@supabase/supabase-js':
         specifier: ^2.39.2
         version: 2.39.2
@@ -3200,8 +3200,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@prisma/client@5.7.1(prisma@5.7.1):
-    resolution: {integrity: sha512-TUSa4nUcC4nf/e7X3jyO1pEd6XcI/TLRCA0KjkA46RDIpxUaRsBYEOqITwXRW2c0bMFyKcCRXrH4f7h4q9oOlg==}
+  /@prisma/client@5.8.0(prisma@5.7.1):
+    resolution: {integrity: sha512-QxO6C4MaA/ysTIbC+EcAH1aX/YkpymhXtO6zPdk+FvA7+59tNibIYpd+7koPdViLg2iKES4ojsxWNUGNJaEcbA==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -3228,13 +3228,13 @@ packages:
       '@prisma/fetch-engine': 5.7.1
       '@prisma/get-platform': 5.7.1
 
-  /@prisma/extension-accelerate@0.6.2(@prisma/client@5.7.1):
+  /@prisma/extension-accelerate@0.6.2(@prisma/client@5.8.0):
     resolution: {integrity: sha512-KIBVPeWt8qaSg7wQ+TXmCVeUDoW75whtXcdS9dbHxRoO2OWFH5I9+qbkHBhx5Wj/h1wQpS8usuxGnsZqiBjUpQ==}
     engines: {node: '>=16'}
     peerDependencies:
       '@prisma/client': '>=4.16.1'
     dependencies:
-      '@prisma/client': 5.7.1(prisma@5.7.1)
+      '@prisma/client': 5.8.0(prisma@5.7.1)
     dev: false
 
   /@prisma/fetch-engine@5.7.1:
