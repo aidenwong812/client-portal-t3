@@ -56,8 +56,6 @@ export const signInWithGoogle = async () => {
     provider: "google",
     options: { redirectTo: `${origin}/auth/callback` },
   });
-  console.log("origin ===>>>>", origin);
-  console.log("res ===>>>", res.data)
 
   if (res.data.url) redirect(res.data.url);
 
