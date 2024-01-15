@@ -49,7 +49,7 @@ export const signInWithDiscord = async () => {
 };
 
 export const signInWithGoogle = async () => {
-  const origin = headers().get("origin");
+  const origin = process.env.NEXT_PUBLIC_BASE_URL;
   const supabase = createServerActionClient({ cookies });
 
   const res = await supabase.auth.signInWithOAuth({
