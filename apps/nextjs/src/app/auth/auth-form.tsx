@@ -102,7 +102,10 @@ export const AuthForm = ({ className, type, ...props }: AuthFormProps) => {
         type="button"
         className="flex gap-3"
         disabled={isLoading}
-        onClick={() => signInWithGoogle()}
+        onClick={async () => {
+          setIsLoading(true);
+          await signInWithGoogle();
+        }}
       >
         <Image src="/google.svg" alt="Google icon" width={15} height={15} />
         Google
@@ -111,7 +114,10 @@ export const AuthForm = ({ className, type, ...props }: AuthFormProps) => {
         variant="outline"
         type="button"
         disabled={isLoading}
-        onClick={() => signInWithDiscord()}
+        onClick={async () => {
+          setIsLoading(true);
+          await signInWithDiscord();
+        }}
       >
         Discord
       </Button>
