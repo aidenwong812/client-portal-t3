@@ -11,22 +11,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@acme/ui/dialog"
-import { Label } from "@acme/ui/label"
 import { CommonInput } from "../common/input"
-import { ClientSwitch } from "./switch"
 
-export const ClientDialog = () => {
+export const FAQPreviewDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="uppercase rounded-full flex gap-1 items-center">
+        <Button className="uppercase rounded-full flex gap-1 items-center" variant="outline">
           <PlusIcon className="w-4 h-4" />
-          New Client
+          AI Preview
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Register Client</DialogTitle>
+          <DialogTitle>Create a FAQ Set</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-4 pt-4">
           <div className="grid gap-4">
@@ -41,16 +39,6 @@ export const ClientDialog = () => {
           </div>
         </div>
         <hr />
-        <div className="flex flex-col gap-4">
-          <Label htmlFor="features">Enable Features</Label>
-          <div id="features" className="flex justify-between px-8">
-            <ClientSwitch text="Analytics" />
-            <ClientSwitch text="Transcripts" />
-            <ClientSwitch text="Knowledge Base" />
-            <ClientSwitch text="Tags" />
-            <ClientSwitch text="FAQ" />
-          </div>
-        </div>
         <DialogFooter className="mt-4">
           <DialogClose asChild>
             <Button type="button" variant="ghost" className="rounded-full">

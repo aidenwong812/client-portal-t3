@@ -16,6 +16,7 @@ import {
 } from "@acme/ui/dropdown-menu";
 
 import { signOut } from "@/app/auth/actions";
+import { redirect } from "next/navigation";
 
 export const UserNav = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -85,29 +86,25 @@ export const Navbar = async () => {
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase.auth.getUser();
 
-  if (!data.user) {
-    return (
-      <div className="flex justify-between">
-        <Link href="/">Cient Portal</Link>
-        <div className="flex items-center space-x-4 text-sm">
-          <Link
-            href="/auth/signup"
-            className="inline-flex transition-colors bg-secondary text-secondary-foreground font-medium rounded-md shadow hover:bg-secondary/90 h-9 px-4 py-2"
-          >
-            Sign Up
-          </Link>
-          <Link
-            href="/auth/login"
-            className="inline-flex transition-colors bg-primary text-primary-foreground font-medium rounded-md shadow hover:bg-primary/90 h-9 px-4 py-2"
-          >
-            Login
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  if (data.user) redirect('/clients');
 
   return (
-    <></>
-  )
+    <div className="flex justify-between">
+      <Link href="/">Cient Portal</Link>
+      <div className="flex items-center space-x-4 text-sm">
+        <Link
+          href="/auth/signup"
+          className="inline-flex transition-colors bg-secondary text-secondary-foreground font-medium rounded-md shadow hover:bg-secondary/90 h-9 px-4 py-2"
+        >
+          Sign Up
+        </Link>
+        <Link
+          href="/auth/login"
+          className="inline-flex transition-colors bg-primary text-primary-foreground font-medium rounded-md shadow hover:bg-primary/90 h-9 px-4 py-2"
+        >
+          Login
+        </Link>
+      </div>
+    </div>
+  );
 };

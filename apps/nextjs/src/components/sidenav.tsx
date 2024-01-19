@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRightIcon, ChevronLeftIcon, PersonIcon, GearIcon, ExitIcon } from "@radix-ui/react-icons"
+import { ChevronRightIcon, ChevronLeftIcon, CubeIcon, DesktopIcon, ExitIcon, GearIcon, LockClosedIcon, PersonIcon, QuestionMarkCircledIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@acme/ui/button";
 import { usePathname } from "next/navigation";
@@ -28,10 +28,27 @@ export const SideNav = () => {
             <PersonIcon className="h-5 w-5" />
             <p>Clients</p>
           </Link>
-          <Link className="inline-flex items-center gap-2 p-3 rounded-lg hover:bg-muted h-10" href="/account">
+          <Link className={`${pathname === "/account" ? "bg-muted" : ""} inline-flex items-center gap-2 p-3 rounded-lg hover:bg-muted h-10`} href="/account">
             <GearIcon className="h-5 w-5" />
             <p>Account Settings</p>
           </Link>
+
+          <Link className={`${pathname === "/analytics" ? "bg-muted" : ""} inline-flex items-center gap-2 p-3 rounded-lg hover:bg-muted h-10`} href="/analytics">
+            <DesktopIcon className="h-5 w-5" />
+            <p>Analytics</p>
+          </Link>
+          <Link className={`${pathname === "/faq" ? "bg-muted" : ""} inline-flex items-center gap-2 p-3 rounded-lg hover:bg-muted h-10`} href="/faq">
+            <QuestionMarkCircledIcon className="h-5 w-5" />
+            <p>FAQ</p>
+          </Link>
+          <Link className={`${pathname === "/knowledge-base" ? "bg-muted" : ""} inline-flex items-center gap-2 p-3 rounded-lg hover:bg-muted h-10`} href="/knowledge-base">
+            <CubeIcon className="h-5 w-5" />
+            <p>Knowledge Base</p>
+          </Link>
+          <Button className="inline-flex items-center justify-start gap-2 p-3 rounded-lg hover:bg-muted h-10 text-md" variant="ghost">
+            <LockClosedIcon className="h-5 w-5 hover:hidden" />
+            <p>Change Password</p>
+          </Button>
         </div>
       </div>
       <div>

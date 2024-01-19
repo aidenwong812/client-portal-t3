@@ -4,7 +4,7 @@ import { AvatarIcon } from "@radix-ui/react-icons"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@acme/ui/card"
 import { Input } from "@acme/ui/input"
 import { Label } from "@acme/ui/label"
-import { ClientInput } from "../clients/input"
+import { CommonInput } from "../common/input"
 import { Button } from "@acme/ui/button"
 
 export const ProfileCard = () => {
@@ -24,14 +24,14 @@ export const ProfileCard = () => {
           <Label>Agency Logo</Label>
         </div>
         <div className="flex flex-col gap-4">
-          <ClientInput text="EMAIL" />
+          <CommonInput text="EMAIL" />
           <div className="flex gap-2 items-end">
             <div className="flex-1">
-              <ClientInput text="PASSWORD" />
+              <CommonInput text="PASSWORD" />
             </div>
             <Button className="px-1" variant="outline">CHANGE</Button>
           </div>
-          <ClientInput text="SUBSCRIPTION RENEW DATE" />
+          <CommonInput text="SUBSCRIPTION RENEW DATE" />
         </div>
       </CardContent>
       <CardFooter className="p-3">
