@@ -1,54 +1,45 @@
 "use client";
 
+import { useEffect, useState } from "react"
+import axios from "axios";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@acme/ui/table"
 import { Checkbox } from "@acme/ui/checkbox"
+import { Badge } from "@acme/ui/badge";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
+type FAQType = {
+  faqSetID: string,
+  name: string,
+  status: {
+    type: string
   },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-]
+  updatedAt: string
+}[]
 
-export const FAQTable = () => {
+type Prop = {
+  VOICEFLOW_ENDPOINT: string
+  VOICEFLOW_API: string
+}
+
+export const FAQTable = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => {
+  const [faqSets, setFaqSets] = useState<FAQType>([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios.get(`${VOICEFLOW_ENDPOINT}/knowledge-base/faqs`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': VOICEFLOW_API,
+        }
+      })
+        .then(res => {
+          if (res.data)
+            setFaqSets(res.data.data)
+        })
+        .catch((err) => console.error(err))
+    };
+    fetchData()
+  }, [])
+
   return (
     <Table>
       <TableHeader>
@@ -60,12 +51,17 @@ export const FAQTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody className="[&_tr:last-child]:border-b">
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
+        {faqSets.map((faq) => (
+          <TableRow key={faq.faqSetID}>
             <TableCell><Checkbox /></TableCell>
-            <TableCell className="font-medium">Aiden</TableCell>
-            <TableCell>lionstar259007@gmail.com</TableCell>
-            <TableCell>N/A</TableCell>
+            <TableCell className="font-medium">{faq.name}</TableCell>
+            <TableCell>
+              {faq.status.type}
+              {/* <Badge className="rounded-full font-bold text-[color:hsl(142.1,76.2%,36.3%)] bg-[color:hsla(142.1,76.2%,36.3%,0.2)]">
+                success
+              </Badge> */}
+            </TableCell>
+            <TableCell>{new Intl.DateTimeFormat('en-US').format(new Date(faq.updatedAt))}</TableCell>
           </TableRow>
         ))}
       </TableBody>

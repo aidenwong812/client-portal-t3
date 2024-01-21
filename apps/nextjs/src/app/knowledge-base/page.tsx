@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { MagnifyingGlassIcon, PlusIcon } from "@radix-ui/react-icons"
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons"
 import { SideNav } from "@/components/sidenav"
 import {
   Card,
@@ -9,8 +9,6 @@ import {
 } from "@acme/ui/card"
 import { Input } from "@acme/ui/input"
 import { KnowledgeBaseTable } from "@/components/knowledge-base/table"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@acme/ui/dropdown-menu"
-import { Button } from "@acme/ui/button"
 import { KnowledgeBasePreviewDialog } from "@/components/knowledge-base/preview-dialog"
 import { AddKnowledgeBaseDialog } from "@/components/knowledge-base/knowledge-dialog"
 
@@ -22,6 +20,9 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
+  const VOICEFLOW_ENDPOINT = process.env.NEXT_PUBLIC_VOICEFLOW_ENDPOINT
+  const VOICEFLOW_API = process.env.NEXT_PUBLIC_VOICEFLOW_API
+
   return (
     <div className="flex">
       <SideNav />
@@ -33,7 +34,10 @@ const Page = async () => {
               <KnowledgeBasePreviewDialog />
             </div>
             <div className="flex items-center space-x-2">
-              <AddKnowledgeBaseDialog />
+              <AddKnowledgeBaseDialog
+                VOICEFLOW_ENDPOINT={VOICEFLOW_ENDPOINT!}
+                VOICEFLOW_API={VOICEFLOW_API!}
+              />
             </div>
           </div>
         </div>
@@ -49,7 +53,7 @@ const Page = async () => {
             <CardTitle className="text-xl pl-2">
               Data Sources
             </CardTitle>
-            <KnowledgeBaseTable />
+            <KnowledgeBaseTable VOICEFLOW_ENDPOINT={VOICEFLOW_ENDPOINT!} VOICEFLOW_API={VOICEFLOW_API!} />
           </CardContent>
         </Card>
       </div>

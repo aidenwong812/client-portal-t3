@@ -15,13 +15,21 @@ import { Label } from "@acme/ui/label"
 import { Input } from "@acme/ui/input"
 import { useState } from "react"
 import { FAQCard } from "./card"
+import axios from "axios"
+import { redirect } from "next/navigation"
 
-export const FAQCreateDialog = () => {
+type Prop = {
+  VOICEFLOW_ENDPOINT: string
+  VOICEFLOW_API: string
+}
+
+export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => {
+  const [name, setName] = useState("")
   const [FAQs, setFAQs] = useState([{
     id: 0,
     question: "",
     answer: ""
-  }]);
+  }])
 
   const handleChange = (id: number, question: string, answer: string) => {
     setFAQs(prevFAQs => prevFAQs.map(one => {
@@ -36,8 +44,30 @@ export const FAQCreateDialog = () => {
     }))
   }
 
-  const handleSubmit = () => {
-    console.log(FAQs)
+  const handleSubmit = async () => {
+    const data = {
+      name: name,
+      faqs: FAQs.map(faq => {
+        return {
+          question: faq.question,
+          answer: faq.answer
+        }
+      })
+    }
+
+    await axios.post(`${VOICEFLOW_ENDPOINT}/knowledge-base/faqs`, {
+      data: data
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': VOICEFLOW_API,
+      }
+    })
+      .then(res => {
+        if (res.data)
+          redirect("/faq")
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -58,7 +88,7 @@ export const FAQCreateDialog = () => {
             <Label htmlFor="name">
               Name:
             </Label>
-            <Input id="name" className="" type="text" />
+            <Input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
           <div className="flex flex-col gap-4 max-h-[320px] overflow-y-auto px-2">

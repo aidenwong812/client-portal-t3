@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
+  const VOICEFLOW_ENDPOINT = process.env.NEXT_PUBLIC_VOICEFLOW_ENDPOINT
+  const VOICEFLOW_API = process.env.NEXT_PUBLIC_VOICEFLOW_API
+
   return (
     <div className="flex">
       <SideNav />
@@ -31,7 +34,10 @@ const Page = async () => {
               <FAQPreviewDialog />
             </div>
             <div className="flex items-center space-x-2">
-              <FAQCreateDialog />
+              <FAQCreateDialog
+                VOICEFLOW_ENDPOINT={VOICEFLOW_ENDPOINT!}
+                VOICEFLOW_API={VOICEFLOW_API!}
+              />
             </div>
           </div>
         </div>
@@ -47,7 +53,7 @@ const Page = async () => {
             <CardTitle className="text-xl pl-2">
               FAQ Sets
             </CardTitle>
-            <FAQTable />
+            <FAQTable VOICEFLOW_ENDPOINT={VOICEFLOW_ENDPOINT!} VOICEFLOW_API={VOICEFLOW_API!} />
           </CardContent>
         </Card>
       </div>
