@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { TrashIcon } from "@radix-ui/react-icons"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@acme/ui/table"
 import { Checkbox } from "@acme/ui/checkbox"
 import { Badge } from "@acme/ui/badge";
+import { Button } from "@acme/ui/button";
 
 type KnowledgeBaseType = {
   documentID: string,
@@ -21,11 +23,12 @@ type KnowledgeBaseType = {
 }[]
 
 type Prop = {
-  VOICEFLOW_ENDPOINT: string
-  VOICEFLOW_API: string
+  VOICEFLOW_ENDPOINT: string,
+  VOICEFLOW_API: string,
+  openCreate: boolean,
 }
 
-export const KnowledgeBaseTable = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => {
+export const KnowledgeBaseTable = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API, openCreate }: Prop) => {
   const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseType>([])
 
   useEffect(() => {
@@ -43,7 +46,29 @@ export const KnowledgeBaseTable = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) 
         .catch((err) => console.error(err))
     };
     fetchData()
-  }, [])
+  }, [openCreate])
+
+  const handleDeleteClick = async (documentID: string) => {
+    if (documentID)
+      await axios.delete(`${VOICEFLOW_ENDPOINT}/knowledge-base/faqs/${documentID}`, {
+        headers: {
+          'Authorization': VOICEFLOW_API,
+        }
+      })
+        .finally(async () => {
+          await axios.get(`${VOICEFLOW_ENDPOINT}/knowledge-base/docs`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': VOICEFLOW_API,
+            }
+          })
+            .then(res => {
+              if (res.data)
+                setKnowledgeBase(res.data.data)
+            })
+            .catch((err) => console.error(err))
+        })
+  }
 
   return (
     <Table>
@@ -55,6 +80,7 @@ export const KnowledgeBaseTable = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) 
           <TableHead>Status</TableHead>
           <TableHead>Date</TableHead>
           <TableHead>Tags</TableHead>
+          <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody className="[&_tr:last-child]:border-b">
@@ -74,6 +100,11 @@ export const KnowledgeBaseTable = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) 
               {
                 one.tags.map(tag => tag)
               }
+            </TableCell>
+            <TableCell className="text-right">
+              <Button className="rounded-full" variant="ghost" size="icon" onClick={() => handleDeleteClick(one.documentID)}>
+                <TrashIcon />
+              </Button>
             </TableCell>
           </TableRow>
         ))}

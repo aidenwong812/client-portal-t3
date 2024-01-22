@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import axios from "axios"
 import { PlusIcon } from "@radix-ui/react-icons"
 import {
   Dialog,
@@ -23,11 +24,19 @@ import { Input } from "@acme/ui/input"
 
 import { CommonInput } from "../common/input"
 
-export const AddKnowledgeBaseDialog = () => {
+type Prop = {
+  VOICEFLOW_ENDPOINT: string,
+  VOICEFLOW_API: string,
+  setOpenCreate: (open: boolean) => void,
+}
+
+export const AddKnowledgeBaseDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API, setOpenCreate }: Prop) => {
   const [openURL, setOpenURL] = React.useState(false)
   const [openSitemap, setOpenSitemap] = React.useState(false)
+  const [openFileUpload, setOpenFileUpload] = React.useState(false)
   const [url, setUrl] = React.useState("")
   const [sitemap, setSitemap] = React.useState("")
+  const [file, setFile] = React.useState<File>()
 
   const handleChange = (updateType: string, value: string) => {
     if (updateType === "url")
@@ -36,15 +45,55 @@ export const AddKnowledgeBaseDialog = () => {
       setSitemap(value)
   }
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target?.files?.length && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-
-      reader.onloadend = () => {
-        console.log(reader.result)
-      }
+      setFile(e.target.files[0])
     }
+  }
+
+  const handleFileUpload = async () => {
+    await axios.post(`${VOICEFLOW_ENDPOINT}/knowledge-base/docs/upload`, {
+      file
+    }, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': VOICEFLOW_API,
+      }
+    })
+      .then(res => {
+        if (res.data) {
+          console.log(res.data)
+          setOpenFileUpload(false)
+        }
+      })
+      .catch(err => console.log(err))
+      .finally(() => setOpenCreate(false))
+  }
+
+  const handleURLUpload = async () => {
+    const data = {
+      type: 'url',
+      name: url,
+      url: url
+    }
+
+    await axios.post(`${VOICEFLOW_ENDPOINT}/knowledge-base/docs/upload`, {
+      data
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': VOICEFLOW_API,
+      }
+    })
+      .then(res => {
+        if (res.data) {
+          console.log(res.data)
+          setOpenURL(false)
+          setOpenSitemap(false)
+        }
+      })
+      .catch(err => console.log(err))
+      .finally(() => setOpenCreate(false))
   }
 
   return (
@@ -59,27 +108,18 @@ export const AddKnowledgeBaseDialog = () => {
         <DropdownMenuContent className="w-56">
           <DropdownMenuItem onSelect={() => setOpenURL(true)}>URL</DropdownMenuItem>
           <DropdownMenuItem onSelect={() => setOpenSitemap(true)}>Sitemap</DropdownMenuItem>
-          <DropdownMenuItem className="relative py-2">
-            <Label htmlFor="text" className="absolute h-full w-full py-1.5 top-0.5">
-              Text
-            </Label>
-            <Input id="text" className="hidden" type="file" onChange={(e) => handleUpload(e, "text")} />
+          <DropdownMenuItem onSelect={() => setOpenFileUpload(true)}>
+            FILE
             <DropdownMenuShortcut>10mb max</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem className="relative py-2">
-            <Label htmlFor="text" className="absolute h-full w-full py-1.5 top-0.5">
-              PDF
-            </Label>
-            <Input id="text" className="hidden" type="file" onChange={(e) => handleUpload(e, "text")} />
+          {/* <DropdownMenuItem onSelect={() => setOpenFileUpload(true)}>
+            PDF
             <DropdownMenuShortcut>10mb max</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem className="relative py-2">
-            <Label htmlFor="text" className="absolute h-full w-full py-1.5 top-0.5">
-              DOC
-            </Label>
-            <Input id="text" className="hidden" type="file" onChange={(e) => handleUpload(e, "text")} />
+          <DropdownMenuItem onSelect={() => setOpenFileUpload(true)}>
+            DOC
             <DropdownMenuShortcut>10mb max</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -97,7 +137,7 @@ export const AddKnowledgeBaseDialog = () => {
                 CANCEL
               </Button>
             </DialogClose>
-            <Button type="submit" className="rounded-full">UPLOAD</Button>
+            <Button type="submit" className="rounded-full" onClick={handleURLUpload}>UPLOAD</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -116,7 +156,29 @@ export const AddKnowledgeBaseDialog = () => {
                 CANCEL
               </Button>
             </DialogClose>
-            <Button type="submit" className="rounded-full">UPLOAD</Button>
+            <Button type="submit" className="rounded-full" onClick={handleURLUpload}>UPLOAD</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={openFileUpload} onOpenChange={setOpenFileUpload}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Upload File</DialogTitle>
+          </DialogHeader>
+          <div className="pt-4">
+            <Label htmlFor="file">
+              File (TXT, PDF, DOC)
+            </Label>
+            <Input id={"file"} type="file" accept=".txt, .pdf, .doc" onChange={handleFile} />
+          </div>
+          <DialogFooter className="mt-4">
+            <DialogClose asChild>
+              <Button type="button" variant="ghost" className="rounded-full" onClick={() => setOpenFileUpload(false)}>
+                CANCEL
+              </Button>
+            </DialogClose>
+            <Button type="submit" className="rounded-full" onClick={handleFileUpload}>UPLOAD</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import axios from "axios"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Button } from "@acme/ui/button"
 import {
@@ -9,33 +11,56 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@acme/ui/dialog"
 import { Label } from "@acme/ui/label"
 import { Input } from "@acme/ui/input"
-import { useState } from "react"
 import { FAQCard } from "./card"
-import axios from "axios"
-import { redirect } from "next/navigation"
 
 type Prop = {
-  VOICEFLOW_ENDPOINT: string
-  VOICEFLOW_API: string
+  VOICEFLOW_ENDPOINT: string,
+  VOICEFLOW_API: string,
+  openCreate: boolean,
+  setOpenCreate: (open: boolean) => void,
+  faqSetID: string
 }
 
-export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => {
+export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API, openCreate, setOpenCreate, faqSetID }: Prop) => {
   const [name, setName] = useState("")
   const [FAQs, setFAQs] = useState([{
-    id: 0,
+    faqID: "",
     question: "",
     answer: ""
   }])
 
-  const handleChange = (id: number, question: string, answer: string) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      if (faqSetID)
+        await axios.get(`${VOICEFLOW_ENDPOINT}/knowledge-base/faqs/${faqSetID}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': VOICEFLOW_API,
+          }
+        })
+          .then(res => {
+            if (res.data) {
+              setName(res.data.data.name as string)
+              setFAQs(res.data.faqSetItems as [{
+                faqID: string,
+                question: string,
+                answer: string
+              }])
+            }
+          })
+          .catch((err) => console.error(err))
+    }
+    fetchData()
+  }, [faqSetID])
+
+  const handleChange = (question: string, answer: string, faqID?: string) => {
     setFAQs(prevFAQs => prevFAQs.map(one => {
-      if (one.id === id) {
+      if (one.faqID === faqID) {
         return {
-          id,
+          faqID,
           question,
           answer
         }
@@ -55,6 +80,13 @@ export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => 
       })
     }
 
+    if (faqSetID)
+      await axios.delete(`${VOICEFLOW_ENDPOINT}/knowledge-base/faqs/${faqSetID}`, {
+        headers: {
+          'Authorization': VOICEFLOW_API,
+        }
+      })
+
     await axios.post(`${VOICEFLOW_ENDPOINT}/knowledge-base/faqs`, {
       data: data
     }, {
@@ -65,19 +97,14 @@ export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => 
     })
       .then(res => {
         if (res.data)
-          redirect("/faq")
+          console.log(res.data)
       })
       .catch(err => console.log(err))
+      .finally(() => setOpenCreate(false))
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="uppercase rounded-full flex gap-1 items-center">
-          <PlusIcon className="w-4 h-4" />
-          Create FAQ
-        </Button>
-      </DialogTrigger>
+    <Dialog open={openCreate} onOpenChange={setOpenCreate}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Create a FAQ Set</DialogTitle>
@@ -94,7 +121,7 @@ export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => 
           <div className="flex flex-col gap-4 max-h-[320px] overflow-y-auto px-2">
             {
               FAQs.map(faq => (
-                <FAQCard key={faq.id} faq={faq} onDelete={() => setFAQs(prev => prev.filter(one => one.id !== faq.id))} onChange={handleChange} />
+                <FAQCard key={faq.faqID} faq={faq} onDelete={() => setFAQs(prev => prev.filter(one => one.faqID !== faq.faqID))} onChange={handleChange} />
               ))
             }
           </div>
@@ -102,7 +129,7 @@ export const FAQCreateDialog = ({ VOICEFLOW_ENDPOINT, VOICEFLOW_API }: Prop) => 
           <Button
             className="uppercase rounded-full flex gap-1 items-center"
             onClick={() => setFAQs(prev => [...prev, {
-              id: (prev[prev.length - 1]?.id ?? 0) + 1,
+              faqID: (prev[prev.length - 1]?.faqID ?? "") + 1,
               question: "",
               answer: ""
             }])}

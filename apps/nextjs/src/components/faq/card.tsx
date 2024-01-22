@@ -6,18 +6,20 @@ import { CommonInput } from "../common/input"
 import { useState } from "react"
 
 type Prop = {
-  faq: {
-    id: number,
-    question: string,
-    answer: string
-  },
-  onDelete: () => void,
+  onDelete: () => void;
   onChange: (
-    id: number,
     question: string,
-    answer: string
-  ) => void,
+    answer: string,
+    faqID?: string
+  ) => void;
+
+  faq: {
+    faqID?: string;
+    question: string;
+    answer: string;
+  };
 }
+
 
 export const FAQCard = ({ faq, onDelete, onChange }: Prop) => {
   const [question, setQuestion] = useState(faq.question)
@@ -28,17 +30,17 @@ export const FAQCard = ({ faq, onDelete, onChange }: Prop) => {
       case "question":
         setQuestion(value)
         onChange(
-          faq.id,
           value,
-          answer
+          answer,
+          faq.faqID
         )
         break
       case "answer":
         setAnswer(value)
         onChange(
-          faq.id,
           question,
-          value
+          value,
+          faq.faqID
         )
         break
     }
