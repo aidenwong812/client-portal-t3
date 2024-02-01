@@ -9,29 +9,43 @@ datasource db {
   directUrl = env("DIRECT_DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  AGENCY
+  CLIENT
+}
+
 model User {
   id                     String    @id @default(cuid())
-  name                   String?
   username               String?   @unique
   email                  String    @unique
+  password               String?
   emailVerified          DateTime?
   image                  String?
+  role                   Role      @default(AGENCY)
   stripeCustomerId       String?   @unique
   stripeSubscriptionId   String?   @unique
   stripePriceId          String?
   stripeCurrentPeriodEnd DateTime?
 
-  todos Todo[]
+  assistants Assistant[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
 
-model Todo {
-  id String @id @default(cuid())
+model Assistant {
+  id            String   @id
+  name          String
+  apiKey        String
+  image         String?
+  analytics     Boolean? @default(true)
+  transcripts   Boolean? @default(true)
+  knowledgeBase Boolean? @default(true)
+  tags          Boolean? @default(false)
+  faq           Boolean? @default(false)
 
-  content   String
-  completed Boolean @default(false)
+  clientId String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String

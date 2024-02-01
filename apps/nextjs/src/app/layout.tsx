@@ -16,7 +16,7 @@ export const metadata: Metadata = {
       ? "https://kyh.io"
       : "http://localhost:3000",
   ),
-  title: "Template",
+  title: "Client Portal",
   description: "Simple monorepo with shared backend for web & mobile apps",
   openGraph: {
     title: "Template",
