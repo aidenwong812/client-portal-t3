@@ -32,5 +32,8 @@
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   }
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Button } from "@acme/ui/button"
 import {
@@ -14,10 +15,31 @@ import {
 import { Label } from "@acme/ui/label"
 import { CommonInput } from "../common/input"
 import { ClientSwitch } from "./switch"
+import { saveAssistant } from "./action"
+import { api } from "@/trpc/react"
 
 export const ClientDialog = () => {
+  const [client, setClient] = React.useState({
+    nickname: "",
+    email: "",
+    password: "",
+    apiKey: "",
+    projectId: "",
+  })
+  const [open, setOpen] = React.useState(false)
+
+  const handleChange = (updateType: string, value: string) => {
+    setClient({ ...client, [updateType]: value })
+  }
+
+  const handleSave = () => {
+    api
+    saveAssistant(client)
+    setOpen(false)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen} >
       <DialogTrigger asChild>
         <Button className="uppercase rounded-full flex gap-1 items-center">
           <PlusIcon className="w-4 h-4" />
@@ -29,16 +51,11 @@ export const ClientDialog = () => {
           <DialogTitle>Register Client</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-2 gap-4 pt-4">
-          <div className="grid gap-4">
-            <CommonInput text="Nickname" />
-            <CommonInput text="Email" type="email" />
-            <CommonInput text="Password" type="password" />
-          </div>
-          <div className="grid gap-4">
-            <CommonInput text="API Key" />
-            <CommonInput text="Project ID" />
-            <CommonInput text="Set Expire Date" type="datetime-local" />
-          </div>
+          <CommonInput text="Nickname" defaultValue={client.nickname} updateType="nickname" updateValue={handleChange} />
+          <CommonInput text="Email" type="email" defaultValue={client.email} updateType="email" updateValue={handleChange} />
+          <CommonInput text="Password" type="password" defaultValue={client.password} updateType="password" updateValue={handleChange} />
+          <CommonInput text="API Key" defaultValue={client.apiKey} updateType="apiKey" updateValue={handleChange} />
+          <CommonInput text="Project ID" defaultValue={client.projectId} updateType="projectId" updateValue={handleChange} />
         </div>
         <hr />
         <div className="flex flex-col gap-4">
@@ -57,7 +74,13 @@ export const ClientDialog = () => {
               Close
             </Button>
           </DialogClose>
-          <Button type="submit" className="rounded-full">Save changes</Button>
+          <Button
+            type="submit"
+            className="rounded-full"
+            onClick={handleSave}
+          >
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

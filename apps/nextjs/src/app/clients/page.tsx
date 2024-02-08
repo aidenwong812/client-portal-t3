@@ -10,6 +10,7 @@ import {
 import { Input } from "@acme/ui/input"
 import { ClientTable } from "@/components/clients/table"
 import { ClientDialog } from "@/components/clients/dialog"
+import { api } from "@/trpc/server"
 
 // export const runtime = "edge";
 
@@ -19,6 +20,8 @@ export const metadata: Metadata = {
 };
 
 const Page = async () => {
+  const clients = await api.assistant.all();
+
   return (
     <div className="flex">
       <SideNav />
@@ -44,7 +47,7 @@ const Page = async () => {
             <CardTitle className="text-xl pl-2">
               Client List
             </CardTitle>
-            <ClientTable />
+            <ClientTable clients={clients} />
           </CardContent>
         </Card>
       </div>

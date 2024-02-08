@@ -1,10 +1,10 @@
 import { authRouter } from "./routers/auth";
-import { todoRouter } from "./routers/todo";
+import { assistantRouter } from "./routers/assistant";
 import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
-  todo: todoRouter,
+  assistant: assistantRouter,
 });
 
 // export type definition of API

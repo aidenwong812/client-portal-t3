@@ -1,57 +1,32 @@
 "use client";
 
+import { useState } from "react";
 import { CheckIcon, Pencil2Icon } from "@radix-ui/react-icons"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@acme/ui/table"
 import { Checkbox } from "@acme/ui/checkbox"
 import { Button } from "@acme/ui/button"
 import { ClientSwitch } from "./switch";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-]
+export const ClientTable = ({ clients }: {
+  clients: {
+    id: string,
+    name: string,
+    apiKey: string,
+    analytics: boolean,
+    transcript: boolean,
+    knowledgeBase: boolean,
+    tags: boolean,
+    faq: boolean,
+    clientId: string,
+    userId: string
+  }[]
+}) => {
+  const [assistants, setAssistants] = useState(clients)
 
-export const ClientTable = () => {
+  const handleChange = (updateType: string, value: boolean, id: string) => {
+    setAssistants(prev => prev.map(one => one.id === id ? { ...one, [updateType]: value } : one))
+  }
+
   return (
     <Table>
       <TableHeader>
@@ -66,19 +41,19 @@ export const ClientTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody className="[&_tr:last-child]:border-b">
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
+        {assistants.map((assistant) => (
+          <TableRow key={assistant.id}>
             <TableCell><Checkbox /></TableCell>
-            <TableCell className="font-medium">Aiden</TableCell>
-            <TableCell>lionstar259007@gmail.com</TableCell>
+            <TableCell className="font-medium">{assistant.name}</TableCell>
+            <TableCell>{assistant.userId}</TableCell>
             <TableCell>N/A</TableCell>
             <TableCell><CheckIcon /></TableCell>
             <TableCell className="flex min-w-80 justify-between">
-              <ClientSwitch text="Analytics" />
-              <ClientSwitch text="Transcripts" />
-              <ClientSwitch text="Knowledge Base" />
-              <ClientSwitch text="Tags" />
-              <ClientSwitch text="FAQ" />
+              <ClientSwitch id={assistant.id} text="Analytics" updateType="analytics" defaultValue={assistant.analytics} updateValue={handleChange} />
+              <ClientSwitch id={assistant.id} text="Transcripts" updateType="transcript" defaultValue={assistant.transcript} updateValue={handleChange} />
+              <ClientSwitch id={assistant.id} text="Knowledge Base" updateType="knowledgeBase" defaultValue={assistant.knowledgeBase} updateValue={handleChange} />
+              <ClientSwitch id={assistant.id} text="Tags" updateType="tags" defaultValue={assistant.tags} updateValue={handleChange} />
+              <ClientSwitch id={assistant.id} text="FAQ" updateType="faq" defaultValue={assistant.faq} updateValue={handleChange} />
             </TableCell>
             <TableCell className="text-center">
               <Button className="rounded-full" variant="ghost" size="icon">
