@@ -3,7 +3,7 @@ import { Label } from "@acme/ui/label"
 import { Switch } from "@acme/ui/switch"
 
 type Prop = {
-  id: string
+  id?: string
   text: string,
   defaultValue: boolean,
   updateType: string,
@@ -15,7 +15,7 @@ export const ClientSwitch = ({ id, text, defaultValue, updateType, updateValue }
 
   const updateInputValue = (val: boolean) => {
     setValue(val)
-    updateValue(updateType, val, id)
+    updateValue(updateType, val, id!)
   }
 
   return (

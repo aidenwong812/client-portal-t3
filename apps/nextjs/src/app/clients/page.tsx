@@ -47,7 +47,7 @@ const Page = async () => {
             <CardTitle className="text-xl pl-2">
               Client List
             </CardTitle>
-            <ClientTable clients={clients} />
+            <ClientTable initialClients={clients} />
           </CardContent>
         </Card>
       </div>

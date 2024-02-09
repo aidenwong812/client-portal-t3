@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
@@ -26,18 +27,17 @@ export const assistantRouter = createTRPCRouter({
     .input(z.object({
       name: z.string(),
       apiKey: z.string(),
-      id: z.string(),
-      clientId: z.string().optional()
+      projectId: z.string(),
+      clientEmail: z.string().optional(),
+      analytics: z.boolean(),
+      transcript: z.boolean(),
+      knowledgeBase: z.boolean(),
+      tags: z.boolean(),
+      faq: z.boolean(),
     }))
     .mutation(({ ctx, input }) => {
       return ctx.db.assistant.create({
-        data: {
-          userId: ctx.user.id,
-          id: input.id,
-          name: input.name,
-          apiKey: input.apiKey,
-          clientId: input.clientId,
-        },
+        data: { id: randomUUID(), userId: ctx.user.id, ...input },
       });
     }),
 
@@ -45,21 +45,23 @@ export const assistantRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        name: z.string(),
-        apiKey: z.string(),
-        clientId: z.string().optional()
+        name: z.string().optional(),
+        apiKey: z.string().optional(),
+        clientEmail: z.string().optional(),
+        analytics: z.boolean().optional(),
+        transcript: z.boolean().optional(),
+        knowledgeBase: z.boolean().optional(),
+        tags: z.boolean().optional(),
+        faq: z.boolean().optional(),
       }),
     )
     .mutation(({ ctx, input }) => {
+      const { id, ...data } = input;
       return ctx.db.assistant.update({
         where: {
-          id: input.id,
+          id: id,
         },
-        data: {
-          name: input.name,
-          apiKey: input.apiKey,
-          clientId: input.clientId,
-        },
+        data: data,
       });
     }),
 
