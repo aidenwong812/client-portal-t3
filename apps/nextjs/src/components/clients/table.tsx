@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { CheckIcon, Pencil2Icon } from "@radix-ui/react-icons"
+import { api } from "@/trpc/react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@acme/ui/table"
 import { Checkbox } from "@acme/ui/checkbox"
 import { Button } from "@acme/ui/button"
-import { ClientSwitch } from "./switch";
+import { ClientSwitch } from "./switch"
 
-export const ClientTable = ({ clients }: {
-  clients: {
+export const ClientTable = ({ initialClients }: {
+  initialClients: {
     id: string,
     name: string,
     apiKey: string,
@@ -17,14 +18,28 @@ export const ClientTable = ({ clients }: {
     knowledgeBase: boolean,
     tags: boolean,
     faq: boolean,
-    clientId: string,
+    clientEmail: string,
     userId: string
   }[]
 }) => {
-  const [assistants, setAssistants] = useState(clients)
+  const [assistants, setAssistants] = useState(initialClients)
+  const clients = api.assistant.all.useQuery(undefined, {
+    initialData: initialClients,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  })
 
-  const handleChange = (updateType: string, value: boolean, id: string) => {
+  const updateAssitant = api.assistant.update.useMutation({
+    onSettled: () => clients.refetch()
+  })
+
+  // const deleteAssitant = api.assistant.delete.useMutation({
+  //   onSettled: () => clients.refetch()
+  // })
+
+  const handleChange = async (updateType: string, value: boolean, id: string) => {
     setAssistants(prev => prev.map(one => one.id === id ? { ...one, [updateType]: value } : one))
+    await updateAssitant.mutateAsync({ id, })
   }
 
   return (
@@ -45,7 +60,7 @@ export const ClientTable = ({ clients }: {
           <TableRow key={assistant.id}>
             <TableCell><Checkbox /></TableCell>
             <TableCell className="font-medium">{assistant.name}</TableCell>
-            <TableCell>{assistant.userId}</TableCell>
+            <TableCell>{assistant.clientEmail}</TableCell>
             <TableCell>N/A</TableCell>
             <TableCell><CheckIcon /></TableCell>
             <TableCell className="flex min-w-80 justify-between">

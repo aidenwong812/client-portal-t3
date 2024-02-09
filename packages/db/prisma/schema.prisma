@@ -38,6 +38,7 @@ model Assistant {
   id            String   @id
   name          String
   apiKey        String
+  projectId     String
   image         String?
   analytics     Boolean? @default(true)
   transcripts   Boolean? @default(true)
@@ -45,7 +46,7 @@ model Assistant {
   tags          Boolean? @default(false)
   faq           Boolean? @default(false)
 
-  clientId String?
+  clientEmail String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
