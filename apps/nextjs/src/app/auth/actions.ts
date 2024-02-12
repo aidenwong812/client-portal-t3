@@ -3,8 +3,10 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createServerActionClient } from "@supabase/auth-helpers-nextjs";
+import { api } from "@/trpc/server";
 
 export const signUp = async (email: string, password: string) => {
+  await api.user.create({ email: email, password: password, role: "AGENCY" });
   const supabase = createServerActionClient({ cookies });
   const origin = headers().get("origin");
 
