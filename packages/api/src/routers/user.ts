@@ -1,42 +1,39 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
-export const assistantRouter = createTRPCRouter({
-  all: protectedProcedure.query(({ ctx }) => {
-    return ctx.db.assistant.findMany({
-      where: {
-        userId: ctx.user.id
-      }
-    });
+export const userRouter = createTRPCRouter({
+  all: publicProcedure.query(({ ctx }) => {
+    return ctx.db.user.findMany();
   }),
 
-  byId: protectedProcedure
+  byId: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(({ ctx, input }) => {
-      return ctx.db.user.findMany({
-        where: {
-          id: input.id
-        },
+      return ctx.db.user.findUnique({
+        where: input,
       });
     }),
 
-  create: protectedProcedure
+  byEmail: publicProcedure
+    .input(z.object({ email: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.user.findUnique({
+        where: input,
+      });
+    }),
+
+  create: publicProcedure
     .input(z.object({
-      name: z.string(),
-      apiKey: z.string(),
-      id: z.string(),
-      clientId: z.string().optional()
+      id: z.string().optional(),
+      email: z.string(),
+      username: z.string().optional(),
+      password: z.string().optional(),
+      role: z.enum(["CLIENT", "AGENCY"]),
     }))
     .mutation(({ ctx, input }) => {
-      return ctx.db.assistant.create({
-        data: {
-          userId: ctx.user.id,
-          id: input.id,
-          name: input.name,
-          apiKey: input.apiKey,
-          clientId: input.clientId,
-        },
+      return ctx.db.user.create({
+        data: input,
       });
     }),
 
@@ -44,28 +41,23 @@ export const assistantRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
-        name: z.string(),
-        apiKey: z.string(),
-        clientId: z.string().optional()
+        email: z.string(),
+        password: z.string(),
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.db.assistant.update({
+      return ctx.db.user.update({
         where: {
           id: input.id,
         },
-        data: {
-          name: input.name,
-          apiKey: input.apiKey,
-          clientId: input.clientId,
-        },
+        data: input,
       });
     }),
 
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
-      return ctx.db.assistant.delete({
+      return ctx.db.user.delete({
         where: {
           id: input.id,
         },

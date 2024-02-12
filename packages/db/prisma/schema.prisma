@@ -28,7 +28,8 @@ model User {
   stripePriceId          String?
   stripeCurrentPeriodEnd DateTime?
 
-  assistants Assistant[]
+  Assistant  Assistant[] @relation("id")
+  Assistant1 Assistant[] @relation("email")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -46,9 +47,10 @@ model Assistant {
   tags          Boolean? @default(false)
   faq           Boolean? @default(false)
 
-  clientEmail String?
+  User1       User   @relation("email", fields: [clientEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
+  clientEmail String
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  User   User   @relation("id", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 
   createdAt DateTime @default(now())
