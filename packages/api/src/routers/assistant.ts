@@ -12,7 +12,7 @@ export const assistantRouter = createTRPCRouter({
     });
   }),
 
-  byClientId: protectedProcedure
+  byUserId: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const assistant = await ctx.db.assistant.findUnique({
@@ -29,6 +29,16 @@ export const assistantRouter = createTRPCRouter({
       });
 
       return { ...assistant, password: client?.password };
+    }),
+
+  byClientEmail: protectedProcedure
+    .input(z.object({ email: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.assistant.findUnique({
+        where: {
+          clientEmail: input.email,
+        },
+      });
     }),
 
   create: protectedProcedure

@@ -3,9 +3,7 @@
 import axios from "axios";
 import { format } from "date-fns"
 
-export const getAnalyticsData = async (period: string) => {
-  const VOICEFLOW_API = process.env.NEXT_PUBLIC_VOICEFLOW_API
-
+export const getAnalyticsData = async (period: string, projectID: string, apiKey: string) => {
   const startTime = new Date()
   const endTime = new Date()
   startTime.setDate(endTime.getDate() - parseInt(period))
@@ -15,7 +13,7 @@ export const getAnalyticsData = async (period: string) => {
       {
         name: "interactions",
         filter: {
-          projectID: "656cd0725061e600072a209c",
+          projectID: projectID,
           startTime: startTime.toISOString(),
           endTime: endTime.toISOString(),
         }
@@ -23,7 +21,7 @@ export const getAnalyticsData = async (period: string) => {
       {
         name: "sessions",
         filter: {
-          projectID: "656cd0725061e600072a209c",
+          projectID: projectID,
           startTime: startTime.toISOString(),
           endTime: endTime.toISOString(),
         }
@@ -31,7 +29,7 @@ export const getAnalyticsData = async (period: string) => {
       {
         name: "unique_users",
         filter: {
-          projectID: "656cd0725061e600072a209c",
+          projectID: projectID,
           startTime: startTime.toISOString(),
           endTime: endTime.toISOString(),
         }
@@ -40,7 +38,7 @@ export const getAnalyticsData = async (period: string) => {
   }, {
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': VOICEFLOW_API,
+      'Authorization': apiKey,
     }
   })
 
@@ -59,7 +57,7 @@ export const getAnalyticsData = async (period: string) => {
         {
           name: "interactions",
           filter: {
-            projectID: "656cd0725061e600072a209c",
+            projectID: projectID,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
           }
@@ -67,7 +65,7 @@ export const getAnalyticsData = async (period: string) => {
         {
           name: "sessions",
           filter: {
-            projectID: "656cd0725061e600072a209c",
+            projectID: projectID,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
           }
@@ -75,7 +73,7 @@ export const getAnalyticsData = async (period: string) => {
         {
           name: "top_intents",
           filter: {
-            projectID: "656cd0725061e600072a209c",
+            projectID: projectID,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
           }
@@ -83,7 +81,7 @@ export const getAnalyticsData = async (period: string) => {
         {
           name: "understood_messages",
           filter: {
-            projectID: "656cd0725061e600072a209c",
+            projectID: projectID,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
           }
@@ -91,7 +89,7 @@ export const getAnalyticsData = async (period: string) => {
         {
           name: "unique_users",
           filter: {
-            projectID: "656cd0725061e600072a209c",
+            projectID: projectID,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
           }
@@ -99,7 +97,7 @@ export const getAnalyticsData = async (period: string) => {
         {
           name: "token_usage",
           filter: {
-            projectID: "656cd0725061e600072a209c",
+            projectID: projectID,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
           }
@@ -108,7 +106,7 @@ export const getAnalyticsData = async (period: string) => {
     }, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': VOICEFLOW_API,
+        'Authorization': apiKey,
       }
     })
 

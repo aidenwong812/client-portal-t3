@@ -26,7 +26,6 @@ export const Content = ({ initialData }: {
     faq: boolean,
     clientEmail: string,
     userId: string,
-    password: string,
   }[]
 }) => {
   const [open, setOpen] = React.useState(false)
