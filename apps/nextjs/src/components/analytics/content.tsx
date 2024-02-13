@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import axios from "axios"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@acme/ui/card"
 import {
   Select,
@@ -13,87 +12,29 @@ import {
   SelectValue,
 } from "@acme/ui/select"
 import { Overview } from "@/components/analytics/overview"
+import { getAnalyticsData } from "./action"
 
 export const Content = () => {
-  const VOICEFLOW_API = process.env.NEXT_PUBLIC_VOICEFLOW_API
-
   const [period, setPeirod] = useState("7")
+  const [data, setData] = useState({
+    total: {
+      interactions: 0,
+      unique_users: 0,
+      sessions: 0,
+    },
+    interactions: [{ name: "", total: 0 }],
+    sessions: [{ name: "", total: 0 }],
+    top_intents: [{ name: "", total: "" }],
+    understood_messages: [{ name: "", total: 0 }],
+    unique_users: [{ name: "", total: 0 }],
+    tokens: [{ name: "", total: "" }]
+  })
 
   useEffect(() => {
-    const fetchData = async () => {
-      const startTime = new Date()
-      startTime.setDate(startTime.getDate() - parseInt(period))
-      console.log('endTime', startTime.toISOString())
-      axios.post("https://analytics-api.voiceflow.com/v1/query/usage", {
-        query: [
-          {
-            name: "interactions",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-          {
-            name: "sessions",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-          {
-            name: "top_intents",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-          {
-            name: "top_slots",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-          {
-            name: "understood_messages",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-          {
-            name: "unique_users",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-          {
-            name: "token_usage",
-            filter: {
-              projectID: "656cd0725061e600072a209c",
-              startTime: startTime.toISOString(),
-              endTime: new Date().toISOString(),
-            }
-          },
-        ]
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': VOICEFLOW_API,
-        }
-      })
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
-    }
-    fetchData();
-  }, [])
+    getAnalyticsData(period)
+      .then(res => setData(res))
+      .catch(err => console.log(err))
+  }, [period])
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6 overflow-y-auto h-screen">
@@ -122,10 +63,10 @@ export const Content = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-2xl font-bold">{data.total.interactions}</div>
+            {/* <p className="text-xs text-muted-foreground">
               +20.1% from last month
-            </p>
+            </p> */}
           </CardContent>
         </Card>
         <Card>
@@ -135,10 +76,10 @@ export const Content = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-2xl font-bold">{data.total.unique_users}</div>
+            {/* <p className="text-xs text-muted-foreground">
               +180.1% from last month
-            </p>
+            </p> */}
           </CardContent>
         </Card>
         <Card>
@@ -148,10 +89,10 @@ export const Content = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
-            <p className="text-xs text-muted-foreground">
+            <div className="text-2xl font-bold">{data.total.sessions}</div>
+            {/* <p className="text-xs text-muted-foreground">
               +19% from last month
-            </p>
+            </p> */}
           </CardContent>
         </Card>
       </div>
@@ -164,7 +105,7 @@ export const Content = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={data.interactions} />
           </CardContent>
         </Card>
         <Card>
@@ -175,7 +116,7 @@ export const Content = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={data.understood_messages} />
           </CardContent>
         </Card>
       </div>
@@ -188,7 +129,7 @@ export const Content = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={data.unique_users} />
           </CardContent>
         </Card>
         <Card>
@@ -199,7 +140,7 @@ export const Content = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={data.sessions} />
           </CardContent>
         </Card>
       </div>
@@ -212,7 +153,7 @@ export const Content = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={data.top_intents} />
           </CardContent>
         </Card>
         <Card>
@@ -223,7 +164,7 @@ export const Content = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <Overview />
+            <Overview data={data.tokens} />
           </CardContent>
         </Card>
       </div>
