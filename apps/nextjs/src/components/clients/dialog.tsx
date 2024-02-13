@@ -56,7 +56,7 @@ export const ClientDialog = ({ open, setOpen, initialData }: Props) => {
     }
   }, [initialData])
 
-  // const selectedClient = api.assistant.byClientId.useQuery({ id: clientId }, {
+  // const selectedClient = api.assistant.byUserId.useQuery({ id: clientId }, {
   //   refetchOnMount: false,
   //   refetchOnReconnect: false,
   // })

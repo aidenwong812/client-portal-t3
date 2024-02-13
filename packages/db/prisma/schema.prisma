@@ -36,19 +36,19 @@ model User {
 }
 
 model Assistant {
-  id            String   @id
+  id            String  @id
   name          String
   apiKey        String
   projectId     String
   image         String?
-  analytics     Boolean? @default(true)
-  transcripts   Boolean? @default(true)
-  knowledgeBase Boolean? @default(true)
-  tags          Boolean? @default(false)
-  faq           Boolean? @default(false)
+  analytics     Boolean @default(true)
+  transcripts   Boolean @default(true)
+  knowledgeBase Boolean @default(true)
+  tags          Boolean @default(false)
+  faq           Boolean @default(false)
 
   User1       User   @relation("email", fields: [clientEmail], references: [email], onDelete: Cascade, onUpdate: Cascade)
-  clientEmail String
+  clientEmail String @unique
 
   User   User   @relation("id", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String

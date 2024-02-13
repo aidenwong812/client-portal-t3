@@ -14,7 +14,7 @@ import {
 import { Overview } from "@/components/analytics/overview"
 import { getAnalyticsData } from "./action"
 
-export const Content = () => {
+export const Content = ({ projectID, apiKey }: { projectID: string, apiKey: string }) => {
   const [period, setPeirod] = useState("7")
   const [data, setData] = useState({
     total: {
@@ -31,10 +31,10 @@ export const Content = () => {
   })
 
   useEffect(() => {
-    getAnalyticsData(period)
+    getAnalyticsData(period, projectID, apiKey)
       .then(res => setData(res))
       .catch(err => console.log(err))
-  }, [period])
+  }, [period, projectID, apiKey])
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6 overflow-y-auto h-screen">
