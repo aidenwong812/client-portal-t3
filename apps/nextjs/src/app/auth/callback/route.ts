@@ -18,10 +18,10 @@ export const GET = async (request: NextRequest) => {
     const auth = (await supabase.auth.getUser()).data.user
     user = await api.user.byEmail({ email: auth?.email ?? "" })
     if (!user) {
-      await api.user.create({
+      user = await api.user.create({
         email: auth?.email ?? "",
         password: "",
-        role: "CLIENT",
+        role: "AGENCY",
       })
     }
   }
