@@ -158,10 +158,10 @@ importers:
         version: link:../../packages/ui
       '@supabase/auth-helpers-nextjs':
         specifier: ^0.8.7
-        version: 0.8.7(@supabase/supabase-js@2.39.2)
+        version: 0.8.7(@supabase/supabase-js@2.39.8)
       '@supabase/supabase-js':
-        specifier: ^2.39.2
-        version: 2.39.2
+        specifier: ^2.39.8
+        version: 2.39.8
       '@tanstack/react-query':
         specifier: ^5.17.9
         version: 5.17.9(react@18.2.0)
@@ -254,8 +254,8 @@ importers:
         specifier: workspace:latest
         version: link:../db
       '@supabase/supabase-js':
-        specifier: ^2.39.2
-        version: 2.39.2
+        specifier: ^2.39.8
+        version: 2.39.8
       '@trpc/client':
         specifier: next
         version: 11.0.0-next-alpha.159
@@ -291,14 +291,14 @@ importers:
   packages/db:
     dependencies:
       '@prisma/client':
-        specifier: ^5.9.1
-        version: 5.9.1(prisma@5.9.1)
+        specifier: ^5.11.0
+        version: 5.11.0(prisma@5.11.0)
       '@prisma/extension-accelerate':
         specifier: ^0.6.2
-        version: 0.6.2(@prisma/client@5.9.1)
+        version: 0.6.2(@prisma/client@5.11.0)
       '@supabase/supabase-js':
-        specifier: ^2.39.2
-        version: 2.39.2
+        specifier: ^2.39.8
+        version: 2.39.8
     devDependencies:
       '@kyh/eslint-config':
         specifier: latest
@@ -319,11 +319,11 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1
       prisma:
-        specifier: ^5.9.1
-        version: 5.9.1
+        specifier: ^5.11.0
+        version: 5.11.0
       supabase:
-        specifier: ^1.127.4
-        version: 1.127.4
+        specifier: ^1.148.6
+        version: 1.148.6
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -3301,8 +3301,8 @@ packages:
     requiresBuild: true
     optional: true
 
-  /@prisma/client@5.9.1(prisma@5.9.1):
-    resolution: {integrity: sha512-caSOnG4kxcSkhqC/2ShV7rEoWwd3XrftokxJqOCMVvia4NYV/TPtJlS9C2os3Igxw/Qyxumj9GBQzcStzECvtQ==}
+  /@prisma/client@5.11.0(prisma@5.11.0):
+    resolution: {integrity: sha512-SWshvS5FDXvgJKM/a0y9nDC1rqd7KG0Q6ZVzd+U7ZXK5soe73DJxJJgbNBt2GNXOa+ysWB4suTpdK5zfFPhwiw==}
     engines: {node: '>=16.13'}
     requiresBuild: true
     peerDependencies:
@@ -3311,44 +3311,44 @@ packages:
       prisma:
         optional: true
     dependencies:
-      prisma: 5.9.1
+      prisma: 5.11.0
     dev: false
 
-  /@prisma/debug@5.9.1:
-    resolution: {integrity: sha512-yAHFSFCg8KVoL0oRUno3m60GAjsUKYUDkQ+9BA2X2JfVR3kRVSJFc/GpQ2fSORi4pSHZR9orfM4UC9OVXIFFTA==}
+  /@prisma/debug@5.11.0:
+    resolution: {integrity: sha512-N6yYr3AbQqaiUg+OgjkdPp3KPW1vMTAgtKX6+BiB/qB2i1TjLYCrweKcUjzOoRM5BriA4idrkTej9A9QqTfl3A==}
 
-  /@prisma/engines-version@5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64:
-    resolution: {integrity: sha512-HFl7275yF0FWbdcNvcSRbbu9JCBSLMcurYwvWc8WGDnpu7APxQo2ONtZrUggU3WxLxUJ2uBX+0GOFIcJeVeOOQ==}
+  /@prisma/engines-version@5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102:
+    resolution: {integrity: sha512-WXCuyoymvrS4zLz4wQagSsc3/nE6CHy8znyiMv8RKazKymOMd5o9FP5RGwGHAtgoxd+aB/BWqxuP/Ckfu7/3MA==}
 
-  /@prisma/engines@5.9.1:
-    resolution: {integrity: sha512-gkdXmjxQ5jktxWNdDA5aZZ6R8rH74JkoKq6LD5mACSvxd2vbqWeWIOV0Py5wFC8vofOYShbt6XUeCIUmrOzOnQ==}
+  /@prisma/engines@5.11.0:
+    resolution: {integrity: sha512-gbrpQoBTYWXDRqD+iTYMirDlF9MMlQdxskQXbhARhG6A/uFQjB7DZMYocMQLoiZXO/IskfDOZpPoZE8TBQKtEw==}
     requiresBuild: true
     dependencies:
-      '@prisma/debug': 5.9.1
-      '@prisma/engines-version': 5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64
-      '@prisma/fetch-engine': 5.9.1
-      '@prisma/get-platform': 5.9.1
+      '@prisma/debug': 5.11.0
+      '@prisma/engines-version': 5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102
+      '@prisma/fetch-engine': 5.11.0
+      '@prisma/get-platform': 5.11.0
 
-  /@prisma/extension-accelerate@0.6.2(@prisma/client@5.9.1):
+  /@prisma/extension-accelerate@0.6.2(@prisma/client@5.11.0):
     resolution: {integrity: sha512-KIBVPeWt8qaSg7wQ+TXmCVeUDoW75whtXcdS9dbHxRoO2OWFH5I9+qbkHBhx5Wj/h1wQpS8usuxGnsZqiBjUpQ==}
     engines: {node: '>=16'}
     peerDependencies:
       '@prisma/client': '>=4.16.1'
     dependencies:
-      '@prisma/client': 5.9.1(prisma@5.9.1)
+      '@prisma/client': 5.11.0(prisma@5.11.0)
     dev: false
 
-  /@prisma/fetch-engine@5.9.1:
-    resolution: {integrity: sha512-l0goQOMcNVOJs1kAcwqpKq3ylvkD9F04Ioe1oJoCqmz05mw22bNAKKGWuDd3zTUoUZr97va0c/UfLNru+PDmNA==}
+  /@prisma/fetch-engine@5.11.0:
+    resolution: {integrity: sha512-994viazmHTJ1ymzvWugXod7dZ42T2ROeFuH6zHPcUfp/69+6cl5r9u3NFb6bW8lLdNjwLYEVPeu3hWzxpZeC0w==}
     dependencies:
-      '@prisma/debug': 5.9.1
-      '@prisma/engines-version': 5.9.0-32.23fdc5965b1e05fc54e5f26ed3de66776b93de64
-      '@prisma/get-platform': 5.9.1
+      '@prisma/debug': 5.11.0
+      '@prisma/engines-version': 5.11.0-15.efd2449663b3d73d637ea1fd226bafbcf45b3102
+      '@prisma/get-platform': 5.11.0
 
-  /@prisma/get-platform@5.9.1:
-    resolution: {integrity: sha512-6OQsNxTyhvG+T2Ksr8FPFpuPeL4r9u0JF0OZHUBI/Uy9SS43sPyAIutt4ZEAyqWQt104ERh70EZedkHZKsnNbg==}
+  /@prisma/get-platform@5.11.0:
+    resolution: {integrity: sha512-rxtHpMLxNTHxqWuGOLzR2QOyQi79rK1u1XYAVLZxDGTLz/A+uoDnjz9veBFlicrpWjwuieM4N6jcnjj/DDoidw==}
     dependencies:
-      '@prisma/debug': 5.9.1
+      '@prisma/debug': 5.11.0
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -4663,22 +4663,22 @@ packages:
       '@sinonjs/commons': 3.0.0
     dev: false
 
-  /@supabase/auth-helpers-nextjs@0.8.7(@supabase/supabase-js@2.39.2):
+  /@supabase/auth-helpers-nextjs@0.8.7(@supabase/supabase-js@2.39.8):
     resolution: {integrity: sha512-iYdOjFo0GkRvha340l8JdCiBiyXQuG9v8jnq7qMJ/2fakrskRgHTCOt7ryWbip1T6BExcWKC8SoJrhCzPOxhhg==}
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
-      '@supabase/auth-helpers-shared': 0.6.3(@supabase/supabase-js@2.39.2)
-      '@supabase/supabase-js': 2.39.2
+      '@supabase/auth-helpers-shared': 0.6.3(@supabase/supabase-js@2.39.8)
+      '@supabase/supabase-js': 2.39.8
       set-cookie-parser: 2.6.0
     dev: false
 
-  /@supabase/auth-helpers-shared@0.6.3(@supabase/supabase-js@2.39.2):
+  /@supabase/auth-helpers-shared@0.6.3(@supabase/supabase-js@2.39.8):
     resolution: {integrity: sha512-xYQRLFeFkL4ZfwC7p9VKcarshj3FB2QJMgJPydvOY7J5czJe6xSG5/wM1z63RmAzGbCkKg+dzpq61oeSyWiGBQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
-      '@supabase/supabase-js': 2.39.2
+      '@supabase/supabase-js': 2.39.8
       jose: 4.15.4
     dev: false
 
@@ -4688,8 +4688,8 @@ packages:
       '@supabase/node-fetch': 2.6.15
     dev: false
 
-  /@supabase/gotrue-js@2.62.0:
-    resolution: {integrity: sha512-4eBuZNXGOk7ewqJuHPYMnk8clCtEx6Hfnu6yHLjZlx7w18TqcojcTRUBZagErtpgwwdfzUwKbquexhbrpH/ysw==}
+  /@supabase/gotrue-js@2.62.2:
+    resolution: {integrity: sha512-AP6e6W9rQXFTEJ7sTTNYQrNf0LCcnt1hUW+RIgUK+Uh3jbWvcIST7wAlYyNZiMlS9+PYyymWQ+Ykz/rOYSO0+A==}
     dependencies:
       '@supabase/node-fetch': 2.6.15
     dev: false
@@ -4701,17 +4701,18 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /@supabase/postgrest-js@1.9.1:
-    resolution: {integrity: sha512-xZD2AZDek4ckjuTU+gt32hCN6fz6L3dFJudbiMqsrJ+Ml/RS9k1Kw6VWj5EAdFUJEYB0O/TKEt6oF5VoUwhn+g==}
+  /@supabase/postgrest-js@1.9.2:
+    resolution: {integrity: sha512-I6yHo8CC9cxhOo6DouDMy9uOfW7hjdsnCxZiaJuIVZm1dBGTFiQPgfMa9zXCamEWzNyWRjZvupAUuX+tqcl5Sw==}
     dependencies:
       '@supabase/node-fetch': 2.6.15
     dev: false
 
-  /@supabase/realtime-js@2.9.1:
-    resolution: {integrity: sha512-OxmY2qj+y6+KI4ifTL92j5+WYP+u5/PdThlYxVb0GMcMiMHfA7yIku9yaQNC5/oRdIvhuRpTMG/8/R40eB+8pA==}
+  /@supabase/realtime-js@2.9.3:
+    resolution: {integrity: sha512-lAp50s2n3FhGJFq+wTSXLNIDPw5Y0Wxrgt44eM5nLSA3jZNUUP3Oq2Ccd1CbZdVntPCWLZvJaU//pAd2NE+QnQ==}
     dependencies:
       '@supabase/node-fetch': 2.6.15
       '@types/phoenix': 1.6.4
+      '@types/ws': 8.5.10
       ws: 8.16.0
     transitivePeerDependencies:
       - bufferutil
@@ -4724,14 +4725,14 @@ packages:
       '@supabase/node-fetch': 2.6.15
     dev: false
 
-  /@supabase/supabase-js@2.39.2:
-    resolution: {integrity: sha512-P+raK0epLef7x/s4MOUx6/TM2DX2UqMwbQXcV8PKYBX6xvX/zXARzakHsBrL/W5mA52S1vsRZjR8l7HhEPKmqA==}
+  /@supabase/supabase-js@2.39.8:
+    resolution: {integrity: sha512-WpiawHjseIRcCQTZbMJtHUSOepz5+M9qE1jP9BDmg8X7ehALFwgEkiKyHAu59qm/pKP2ryyQXLtu2XZNRbUarw==}
     dependencies:
       '@supabase/functions-js': 2.1.5
-      '@supabase/gotrue-js': 2.62.0
+      '@supabase/gotrue-js': 2.62.2
       '@supabase/node-fetch': 2.6.15
-      '@supabase/postgrest-js': 1.9.1
-      '@supabase/realtime-js': 2.9.1
+      '@supabase/postgrest-js': 1.9.2
+      '@supabase/realtime-js': 2.9.3
       '@supabase/storage-js': 2.5.5
     transitivePeerDependencies:
       - bufferutil
@@ -5084,6 +5085,12 @@ packages:
   /@types/tinycolor2@1.4.6:
     resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}
     dev: true
+
+  /@types/ws@8.5.10:
+    resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
+    dependencies:
+      '@types/node': 20.10.7
+    dev: false
 
   /@types/yargs-parser@21.0.3:
     resolution: {integrity: sha512-I4q9QU9MQv4oEOz4tAHJtNz1cwuLxn2F3xcc2iV5WdqLPpUnj30aUuxt1mAxYTG+oe8CZMV/+6rU4S4gRDzqtQ==}
@@ -11296,13 +11303,13 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /prisma@5.9.1:
-    resolution: {integrity: sha512-Hy/8KJZz0ELtkw4FnG9MS9rNWlXcJhf98Z2QMqi0QiVMoS8PzsBkpla0/Y5hTlob8F3HeECYphBjqmBxrluUrQ==}
+  /prisma@5.11.0:
+    resolution: {integrity: sha512-KCLiug2cs0Je7kGkQBN9jDWoZ90ogE/kvZTUTgz2h94FEo8pczCkPH7fPNXkD1sGU7Yh65risGGD1HQ5DF3r3g==}
     engines: {node: '>=16.13'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@prisma/engines': 5.9.1
+      '@prisma/engines': 5.11.0
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -12715,8 +12722,8 @@ packages:
     resolution: {integrity: sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==}
     dev: false
 
-  /supabase@1.127.4:
-    resolution: {integrity: sha512-9vxMsRkG8Qqju+gjTL++G/DaUcMyVr9YAT3jeRkNKIzbVVd0QiHUp2NHXXlqs6EByJVZzpMYJf4h55ml/H7gpg==}
+  /supabase@1.148.6:
+    resolution: {integrity: sha512-/VXbN0C/r/o1TkHGw4EXYvwtwfsSvRaBd6lWa5HamcC6HdFpbof8VsSglWjiie5ONTg3lwqv06wcOrtdpzz/Bg==}
     engines: {npm: '>=8'}
     hasBin: true
     requiresBuild: true
