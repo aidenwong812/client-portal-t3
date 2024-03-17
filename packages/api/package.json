@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@acme/db": "workspace:latest",
-    "@supabase/supabase-js": "^2.39.2",
+    "@supabase/supabase-js": "^2.39.8",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "superjson": "^2.2.1",
